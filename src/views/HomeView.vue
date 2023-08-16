@@ -13,6 +13,7 @@ import axios from 'axios'
 import { ref, onMounted, type Ref } from 'vue'
 import type { ICard } from '@/interface/ICards'
 import Loader from '@/commonComponents/LoaderPage.vue'
+import { mtgEndPoints } from '@/enum/mtgApiEnum'
 
 const cards: Ref<ICard[]> = ref([])
 const cardsLoading: Ref<boolean> = ref(true)
@@ -29,7 +30,7 @@ const interactEnd = () => {}
 
 const fetchCards = async () => {
   try {
-    const response = await axios.get('https://api.magicthegathering.io/v1/cards')
+    const response = await axios.get(`${mtgEndPoints.url}${mtgEndPoints.getCards}`)
     cards.value = response.data.cards.filter((card: ICard) => 'imageUrl' in card)
     loadImages()
   } catch (error) {

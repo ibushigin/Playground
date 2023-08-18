@@ -1,8 +1,8 @@
 <template>
   <div class="nav mt-10">
-    <a href="/">Home</a>
-    <a href="/cards">View all cards</a>
-    <a href="/search-card">Search a card</a>
+    <router-link to="/">Home</router-link>
+    <router-link to="/set">View a set</router-link>
+    <router-link to="/search-card">Search a card</router-link>
   </div>
 </template>
 <script setup lang="ts"></script>

@@ -8,4 +8,4 @@ import topNav from '@/components/navigation/topNav.vue'
 import { RouterView } from 'vue-router'
 </script>
 
-<style scoped lang="scss"></style>
+

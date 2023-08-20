@@ -26,10 +26,10 @@ import useApi from '@/composable/useApi'
 import useMouse from '@/composable/useMouse'
 import * as Scry from 'scryfall-sdk'
 const { isLoading } = useApi()
-const cards: Ref<Scry.Card[]> = ref([])
+const cards = ref<Scry.Card[]>([])
 const setModel = ref('')
-const selectedSet: Ref<Scry.Set | undefined> = ref()
-const allSets: Ref<Scry.Set[]> = ref([])
+const selectedSet = ref({} as Scry.Set)
+const allSets = ref<Scry.Set[]>([])
 const { interact, interactEnd } = useMouse()
 
 const test = async () => {

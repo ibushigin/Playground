@@ -12,7 +12,7 @@
         class="card mt-10"
         v-for="(card, index) in cards"
         :key="index"
-        :class="{ active: activeImage === index }"
+        :class="{ active: activeCard === index }"
         @pointermove="interact"
         @mouseout="interactEnd"
         @click="activateCard(index)"
@@ -30,12 +30,13 @@ import { ref, onMounted } from 'vue'
 import useApi from '@/composable/useApi'
 import useMouse from '@/composable/useMouse'
 import * as Scry from 'scryfall-sdk'
+import { forEach } from 'mathjs'
 const { isLoading } = useApi()
 const cards = ref<Scry.Card[]>([])
 const setModel = ref<string>('')
 const selectedSet = ref({} as Scry.Set)
 const allSets = ref<Scry.Set[]>([])
-const activeImage = ref<number>(-1)
+const activeCard = ref<number>(-1)
 const cardRef = ref<HTMLInputElement[]>([])
 const cardCenteredTop = ref<string>()
 const cardCenteredLeft = ref<string>()
@@ -49,7 +50,15 @@ const getCardPosition = (index: number) => {
   cardCenteredLeft.value = `${
     (window.innerWidth - 250) / 2 - cardRef.value[index].getBoundingClientRect().left
   }px`
-  console.log(cardRef.value[index].getBoundingClientRect().top, window.innerHeight)
+}
+const addZIndex = (index: number) => {
+  cardRef.value.forEach((element, key) => {
+    if (key !== index) {
+      element.style.zIndex = '0'
+    } else {
+      element.style.zIndex = '2'
+    }
+  })
 }
 
 const selectSet = async () => {
@@ -57,13 +66,15 @@ const selectSet = async () => {
   selectedSet.value = await Scry.Sets.byId(setModel.value)
   cards.value = await selectedSet.value.getCards()
   isLoading.value = false
+  activeCard.value = -1
 }
 const activateCard = (index: number) => {
-  if (activeImage.value !== index) {
-    activeImage.value = index
+  if (activeCard.value !== index) {
+    activeCard.value = index
     getCardPosition(index)
+    addZIndex(index)
   } else {
-    activeImage.value = -1
+    activeCard.value = -1
   }
 }
 
@@ -88,10 +99,11 @@ onMounted(async () => {
 .card {
   width: 250px;
   height: 354px;
+  z-index: 1;
   position: relative;
   transform-style: preserve-3d;
   perspective: 1000px;
-  transition: 2s;
+  transition: transform 0.7s;
 
   &:hover {
     cursor: pointer;
@@ -101,17 +113,15 @@ onMounted(async () => {
     height: 354px;
     position: absolute;
     backface-visibility: hidden;
-    transition: 1.5s;
+    transition: 0.6s;
     border-radius: 3%;
     &:nth-child(2) {
       transform: rotateY(180deg);
     }
   }
 }
-.card.active {
+.active {
   transform: translateY(v-bind(cardCenteredTop)) translateX(v-bind(cardCenteredLeft)) scale(2);
-  position: sticky;
-  z-index: 1;
   img:nth-child(2) {
     transform: rotateY(-180deg);
   }

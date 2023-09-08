@@ -1,16 +1,15 @@
 <template>
   <div class="loader-container">
     <div class="loader">
+      <div class="ball magic-plain-bg"></div>
+      <div class="ball magic-island-bg"></div>
       <div class="ball magic-swamp-bg"></div>
       <div class="ball magic-mountain-bg"></div>
       <div class="ball magic-forest-bg"></div>
-      <div class="ball magic-plain-bg"></div>
-      <div class="ball magic-island-bg"></div>
     </div>
   </div>
 </template>
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
 <style scoped lang="scss">
 .loader-container {

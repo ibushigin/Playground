@@ -30,7 +30,6 @@ import { ref, onMounted } from 'vue'
 import useApi from '@/composable/useApi'
 import useMouse from '@/composable/useMouse'
 import * as Scry from 'scryfall-sdk'
-import { forEach } from 'mathjs'
 const { isLoading } = useApi()
 const cards = ref<Scry.Card[]>([])
 const setModel = ref<string>('')

@@ -18,7 +18,7 @@
   display: grid;
   justify-content: center;
   align-items: center;
-  background-color: white;
+  background-color: #dbdee1;
 }
 .loader {
   width: 500px;
